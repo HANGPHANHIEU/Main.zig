@@ -8,7 +8,9 @@ pub fn main() !void {
         .reuse_address = true,
     });
 
-    const port = 8080;
+    const port = std.os.getenv("PORT") orelse "8080";
+    const parsed_port = try std.fmt.parseInt(u16, port, 10);
+
 
     try server.listen(.{
         .address = try std.net.Address.parseIp("0.0.0.0", port),
